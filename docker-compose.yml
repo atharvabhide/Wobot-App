@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wobot-app
+    command: uvicorn main:app --host 0.0.0.0 --port 8080 --reload
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    volumes:
+      - ./app:/app
+    environment:
+      DATABASE_URL: mysql+mysqlconnector://user:password@db/db_name
+      JWT_SECRET_KEY: d59ac6152d41e719b14a88d3689bb7021b17cef8eb0c0e94e4828f4f99ff4ef5
+      JWT_REFRESH_SECRET_KEY: 30c150394080433f98cb593764804bba2c9b10cc381e8a85089e2b838cb67fe9
+
+  db:
+    container_name: wobot-db
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: db_name
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root_password
+    ports:
+      - "3307:3306"
+    expose:
+      - "3306"
+    volumes:
+      - ./app:/db-data:/var/lib/mysql
+
+volumes:
+  db-data:

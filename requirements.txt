@@ -1,0 +1,7 @@
+fastapi[all]
+flake8==6.0.0
+SQLAlchemy==2.0.22
+mysql-connector-python==8.0.27
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart==0.0.5
