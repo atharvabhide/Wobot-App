@@ -1,5 +1,9 @@
 from datetime import datetime
-from fastapi import Depends, HTTPException, status
+from fastapi import (
+    Depends,
+    HTTPException,
+    status
+)
 from fastapi.security import OAuth2PasswordBearer
 from core.auth import ALGORITHM, JWT_SECRET_KEY
 
@@ -26,9 +30,18 @@ def get_db():
 
 
 async def get_current_user(
-    token: str = Depends(reuseable_oauth),
-    db: Session = Depends(get_db)
+    token: str = Depends(reuseable_oauth), db: Session = Depends(get_db)
 ) -> User:
+    """
+    Get the current user from the token
+
+    Args:
+    token: str: The token to be decoded
+    db: Session: The database session
+
+    Returns:
+    User: The user object
+    """
     try:
         payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=[ALGORITHM])
         token_data = TokenPayload(**payload)

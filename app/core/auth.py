@@ -24,10 +24,29 @@ password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def get_hashed_password(password: str) -> str:
+    """
+    Hashes the password using bcrypt
+
+    Args:
+    password: str: The password to be hashed
+
+    Returns:
+    str: The hashed password
+    """
     return password_context.hash(password)
 
 
 def verify_password(password: str, hashed_pass: str) -> bool:
+    """
+    Verifies the password using bcrypt
+
+    Args:
+    password: str: The password to be verified
+    hashed_pass: str: The hashed password to be verified against
+
+    Returns:
+    bool: True if the password is verified, False otherwise
+    """
     return password_context.verify(password, hashed_pass)
 
 
@@ -35,6 +54,17 @@ def create_access_token(
     subject: Union[str, Any],
     expires_delta: int = None
 ) -> str:
+    """
+    Creates an access token using the subject
+    and the expiration time
+
+    Args:
+    subject: Union[str, Any]: The subject of the token
+    expires_delta: int: The expiration time of the token
+
+    Returns:
+    str: The encoded token
+    """
     if expires_delta is not None:
         expires_delta = datetime.utcnow() + expires_delta
     else:
@@ -51,6 +81,17 @@ def create_refresh_token(
     subject: Union[str, Any],
     expires_delta: int = None
 ) -> str:
+    """
+    Creates a refresh token using the subject
+    and the expiration time
+
+    Args:
+    subject: Union[str, Any]: The subject of the token
+    expires_delta: int: The expiration time of the token
+
+    Returns:
+    str: The encoded token
+    """
     if expires_delta is not None:
         expires_delta = datetime.utcnow() + expires_delta
     else:

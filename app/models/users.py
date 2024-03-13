@@ -68,10 +68,32 @@ class UserCreateUpdate(BaseModel):
 
 
 class TokenSchema(BaseModel):
+    """
+    TokenSchema model
+
+    Attributes
+    ----------
+    access_token : str
+        User access token
+    refresh_token : str
+        User refresh token
+    """
+
     access_token: str
     refresh_token: str
 
 
 class TokenPayload(BaseModel):
+    """
+    TokenPayload model
+
+    Attributes
+    ----------
+    sub : str
+        User email
+    exp : int
+        Token expiration time
+    """
+
     sub: str = None
     exp: int = None

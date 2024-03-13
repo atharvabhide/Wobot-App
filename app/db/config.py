@@ -12,21 +12,15 @@ if exists:
     DB_HOST = os.getenv("DB_HOST")
     DB_NAME = os.getenv("DB_NAME")
     DB_PORT = os.getenv("DB_PORT")
-    DATABASE_URL = (
-        f"mysql+mysqlconnector:// \
+    DATABASE_URL = f"mysql+mysqlconnector:// \
         {DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
-    )
 else:
     DATABASE_URL = os.environ["DATABASE_URL"]
     print(DATABASE_URL, flush=True)
 
 engine = create_engine(DATABASE_URL)
 
-SessionLocal = sessionmaker(
-    autocommit=False,
-    autoflush=False,
-    bind=engine
-)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
 

@@ -3,10 +3,7 @@ from models.users import User
 from core.auth import get_hashed_password
 
 
-def create_user(
-    db: Session,
-    user: User
-):
+def create_user(db: Session, user: User):
     """
     Create a new User
 

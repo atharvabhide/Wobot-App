@@ -33,6 +33,16 @@ async def create_user_api(
     data: UserCreateUpdate,
     db: Session = Depends(get_db)
 ):
+    """
+    Create a new user
+
+    Args:
+    data (UserCreateUpdate): The user data
+    db (Session): The database session. Defaults to Depends(get_db).
+
+    Returns:
+    db_user: The created user
+    """
     if "@" not in data.email:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid email"
@@ -48,11 +58,25 @@ async def create_user_api(
     return db_user
 
 
-@userRouter.post("/login", response_model=TokenSchema, tags=["Users"])
+@userRouter.post(
+    "/login",
+    response_model=TokenSchema,
+    tags=["Users"]
+)
 async def login_user_api(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
+    """
+    Login a user
+
+    Args:
+    form_data (OAuth2PasswordRequestForm): The user login data
+    db (Session): The database session. Defaults to Depends(get_db).
+
+    Returns:
+    dict: The user access and refresh tokens
+    """
     user = db.query(User).filter(User.email == form_data.username).first()
     if user is None:
         raise HTTPException(
@@ -73,6 +97,18 @@ async def login_user_api(
     }
 
 
-@userRouter.get("/users/me", tags=["Users"])
+@userRouter.get(
+    "/users/me",
+    tags=["Users"]
+)
 async def get_me(user: User = Depends(get_current_user)):
+    """
+    Get the current user
+
+    Args:
+    user (User): The user object. Defaults to Depends(get_current_user).
+
+    Returns:
+    user: The user object
+    """
     return user

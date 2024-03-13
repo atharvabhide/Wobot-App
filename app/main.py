@@ -21,11 +21,20 @@ app.include_router(todoRouter)
 
 @app.get("/", status_code=status.HTTP_200_OK, tags=["Root"])
 def root():
+    """
+    Root route
+
+    Returns:
+    dict: The message
+    """
     return {"message": "Wobot ToDo App with User Auth"}
 
 
 @app.on_event("startup")
 def on_startup():
+    """
+    Create the tables on startup
+    """
     create_tables()
 
 
